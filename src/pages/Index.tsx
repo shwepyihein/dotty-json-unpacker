@@ -3,6 +3,7 @@ import React from 'react';
 import Header from '@/components/Header';
 import JsonConverter from '@/components/JsonConverter';
 import { Separator } from '@/components/ui/separator';
+import GoogleAdSense from '@/components/GoogleAdSense';
 
 const Index: React.FC = () => {
   return (
@@ -11,6 +12,9 @@ const Index: React.FC = () => {
       <Separator />
       <main className="flex-1 py-6 md:py-12">
         <JsonConverter />
+        <div className="container mt-8">
+          <GoogleAdSense adSlot="1234567890" />
+        </div>
       </main>
       <footer className="py-6 text-center text-sm text-muted-foreground">
         <div className="container">

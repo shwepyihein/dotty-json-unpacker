@@ -4,8 +4,8 @@ import ConversionForm from './ConversionForm';
 import ResultDisplay from './ResultDisplay';
 import { jsonToDotNotation, formatDotNotation } from '@/utils/jsonToDotNotation';
 import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { ArrowDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import GoogleAdSense from './GoogleAdSense';
 
 const JsonConverter: React.FC = () => {
   const [dotNotationText, setDotNotationText] = useState<string>('');
@@ -17,21 +17,35 @@ const JsonConverter: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 md:p-8 space-y-6 animate-fade-in">
-      <Card className="border-converter-blue/20">
-        <CardContent className="p-6">
-          <ConversionForm onConvert={handleConvert} />
-        </CardContent>
-      </Card>
-      
-      {dotNotationText && (
-        <>
-          <div className="flex justify-center">
-            <ArrowDown className="text-converter-blue h-8 w-8" />
+    <div className="w-full max-w-7xl mx-auto px-4 animate-fade-in">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+        <Card className="border-converter-blue/20">
+          <CardContent className="p-6">
+            <ConversionForm onConvert={handleConvert} />
+          </CardContent>
+        </Card>
+        
+        <div className="flex flex-col">
+          <div className="hidden md:flex justify-center items-center md:h-12">
+            {dotNotationText && <ArrowRight className="text-converter-blue h-8 w-8" />}
           </div>
-          <ResultDisplay dotNotationText={dotNotationText} />
-        </>
-      )}
+          
+          {dotNotationText ? (
+            <ResultDisplay dotNotationText={dotNotationText} />
+          ) : (
+            <Card className="border-converter-blue/20 h-full">
+              <CardContent className="p-6 flex items-center justify-center h-full">
+                <p className="text-muted-foreground">Converted dot notation will appear here</p>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </div>
+
+      {/* Banner Ad */}
+      <div className="mt-8">
+        <GoogleAdSense adSlot="1234567890" />
+      </div>
     </div>
   );
 };

@@ -25,7 +25,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ dotNotationText }) => {
   };
 
   return (
-    <Card className="w-full border-converter-blue/20">
+    <Card className="w-full border-converter-blue/20 h-full">
       <CardContent className="p-6 space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-semibold">Dot Notation Result</h2>
@@ -45,7 +45,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ dotNotationText }) => {
           </div>
           <Textarea
             ref={textareaRef}
-            className="min-h-[200px] pl-8 font-mono text-sm resize-y bg-converter-blue-light/50 border-converter-blue/20"
+            className="min-h-[300px] pl-8 font-mono text-sm resize-y bg-converter-blue-light/50 border-converter-blue/20"
             value={dotNotationText}
             readOnly
           />

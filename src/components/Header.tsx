@@ -9,7 +9,7 @@ const Header: React.FC = () => {
         <Code size={32} className="text-white" />
         <div>
           <h1 className="text-2xl md:text-3xl font-bold">JSON to Dot Notation Converter</h1>
-          <p className="text-sm md:text-base opacity-90">Transform nested JSON objects into flat dot notation format</p>
+          <p className="text-sm md:text-base opacity-90">Transform nested JSON objects into flat dot notation format - Perfect for localization</p>
         </div>
       </div>
     </header>

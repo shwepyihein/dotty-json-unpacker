@@ -103,7 +103,7 @@ const ConversionForm: React.FC<ConversionFormProps> = ({ onConvert }) => {
           <FileJson size={18} className="text-muted-foreground" />
         </div>
         <Textarea
-          className="min-h-[200px] pl-8 font-mono text-sm resize-y bg-white border-converter-blue/20"
+          className="min-h-[300px] pl-8 font-mono text-sm resize-y bg-white border-converter-blue/20"
           placeholder="Paste your JSON object here..."
           value={jsonInput}
           onChange={handleInputChange}
