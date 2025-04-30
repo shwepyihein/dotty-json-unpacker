@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 
 interface GoogleAdSenseProps {
@@ -6,7 +5,10 @@ interface GoogleAdSenseProps {
   adFormat?: string;
 }
 
-const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({ adSlot, adFormat = 'auto' }) => {
+const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
+  adSlot,
+  adFormat = 'auto',
+}) => {
   useEffect(() => {
     // Initialize Google AdSense when the component mounts
     // This is only needed once per page load
@@ -20,16 +22,16 @@ const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({ adSlot, adFormat = 'auto'
   }, []);
 
   return (
-    <div className="google-ad my-4 text-center">
+    <div className='google-ad my-4 text-center'>
       <ins
-        className="adsbygoogle"
+        className='adsbygoogle'
         style={{ display: 'block' }}
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // Replace with your actual AdSense Publisher ID
+        data-ad-client='ca-pub-684407657486996' // Replace with your actual AdSense Publisher ID
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
-        data-full-width-responsive="true"
+        data-full-width-responsive='true'
       ></ins>
-      <p className="text-xs text-muted-foreground mt-1">Advertisement</p>
+      <p className='text-xs text-muted-foreground mt-1'>Advertisement</p>
     </div>
   );
 };
