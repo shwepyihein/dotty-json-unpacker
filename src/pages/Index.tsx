@@ -12,7 +12,7 @@ const Index: React.FC = () => {
       <main className='flex-1 py-6 md:py-12'>
         <JsonConverter />
         <div className='container mt-8'>
-          <GoogleAdSense adSlot='1234567891' />
+          <GoogleAdSense adSlot='1234567890' />
         </div>
       </main>
       <footer className='py-6 text-center text-sm text-muted-foreground'>
