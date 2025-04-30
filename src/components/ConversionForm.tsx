@@ -1,0 +1,130 @@
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { isValidJson } from '@/utils/jsonToDotNotation';
+import { toast } from '@/components/ui/use-toast';
+import { FileJson, RefreshCw } from 'lucide-react';
+
+interface ConversionFormProps {
+  onConvert: (json: Record<string, any>) => void;
+}
+
+const ConversionForm: React.FC<ConversionFormProps> = ({ onConvert }) => {
+  const [jsonInput, setJsonInput] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setJsonInput(e.target.value);
+  };
+
+  const handleExampleClick = () => {
+    const exampleJson = {
+      "user": {
+        "name": "John",
+        "age": 30,
+        "address": {
+          "street": "123 Main St",
+          "city": "New York"
+        }
+      }
+    };
+    setJsonInput(JSON.stringify(exampleJson, null, 2));
+  };
+
+  const handleClear = () => {
+    setJsonInput('');
+  };
+
+  const handleConvert = () => {
+    if (!jsonInput.trim()) {
+      toast({
+        title: "Empty input",
+        description: "Please enter a JSON object to convert.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setTimeout(() => {
+        if (!isValidJson(jsonInput)) {
+          toast({
+            title: "Invalid JSON",
+            description: "Please enter valid JSON syntax.",
+            variant: "destructive"
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        const parsedJson = JSON.parse(jsonInput);
+        onConvert(parsedJson);
+        toast({
+          title: "Success!",
+          description: "JSON converted to dot notation format.",
+        });
+        setIsLoading(false);
+      }, 500); // Small timeout to show loading state
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred.",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full space-y-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-semibold">Input JSON</h2>
+        <div className="space-x-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleExampleClick}
+          >
+            Load Example
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={handleClear}
+          >
+            Clear
+          </Button>
+        </div>
+      </div>
+      <div className="relative">
+        <div className="absolute top-2 left-2">
+          <FileJson size={18} className="text-muted-foreground" />
+        </div>
+        <Textarea
+          className="min-h-[200px] pl-8 font-mono text-sm resize-y bg-white border-converter-blue/20"
+          placeholder="Paste your JSON object here..."
+          value={jsonInput}
+          onChange={handleInputChange}
+        />
+      </div>
+      <Button 
+        className="w-full bg-converter-blue hover:bg-converter-blue-dark"
+        onClick={handleConvert}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <>
+            <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+            Converting...
+          </>
+        ) : (
+          "Convert to Dot Notation"
+        )}
+      </Button>
+    </div>
+  );
+};
+
+export default ConversionForm;
