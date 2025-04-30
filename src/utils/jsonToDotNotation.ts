@@ -38,36 +38,11 @@ export function formatDotNotation(dotNotationObj: Record<string, any>): string {
   }
   
   const formattedEntries = entries.map(([key, value]) => {
-    // Format value based on its type
-    const formattedValue = formatValue(value);
-    return `"${key}": ${formattedValue}`;
+    // Use backticks for values without any additional formatting
+    return `"${key}": \`${String(value)}\``;
   });
   
   return `{\n  ${formattedEntries.join(',\n  ')}\n}`;
-}
-
-/**
- * Format a value for display, handling different types appropriately
- * @param value - The value to format
- * @returns A properly formatted string representation of the value
- */
-function formatValue(value: any): string {
-  if (typeof value === 'string') {
-    // Escape double quotes in the string value
-    const escapedValue = value.replace(/"/g, '\\"');
-    return `"${escapedValue}"`;
-  } else if (value === null) {
-    return 'null';
-  } else if (typeof value === 'undefined') {
-    return 'undefined';
-  } else if (Array.isArray(value)) {
-    const items = value.map(formatValue).join(', ');
-    return `[${items}]`;
-  } else if (typeof value === 'object') {
-    return JSON.stringify(value);
-  }
-  
-  return String(value);
 }
 
 /**
