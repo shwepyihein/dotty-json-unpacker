@@ -53,7 +53,9 @@ export function formatDotNotation(dotNotationObj: Record<string, any>): string {
  */
 function formatValue(value: any): string {
   if (typeof value === 'string') {
-    return `"${value}"`;
+    // Escape double quotes in the string value
+    const escapedValue = value.replace(/"/g, '\\"');
+    return `"${escapedValue}"`;
   } else if (value === null) {
     return 'null';
   } else if (typeof value === 'undefined') {
