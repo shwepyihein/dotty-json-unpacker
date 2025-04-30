@@ -40,7 +40,7 @@ export function formatDotNotation(dotNotationObj: Record<string, any>): string {
   const formattedEntries = entries.map(([key, value]) => {
     // Format value based on its type
     const formattedValue = formatValue(value);
-    return `${key}: ${formattedValue}`;
+    return `"${key}": ${formattedValue}`;
   });
   
   return `{\n  ${formattedEntries.join(',\n  ')}\n}`;
