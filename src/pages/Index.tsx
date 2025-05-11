@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import GoogleAdSense from '@/components/GoogleAdSense';
 import Header from '@/components/Header';
 import JsonConverter from '@/components/JsonConverter';
@@ -15,11 +16,7 @@ const Index: React.FC = () => {
           <GoogleAdSense adSlot='1234567890' />
         </div>
       </main>
-      <footer className='py-6 text-center text-sm text-muted-foreground'>
-        <div className='container'>
-          <p>JSON to Dot Notation Converter © {new Date().getFullYear()}</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

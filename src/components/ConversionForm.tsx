@@ -1,10 +1,9 @@
-
-import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { isValidJson } from '@/utils/jsonToDotNotation';
 import { toast } from '@/components/ui/use-toast';
+import { isValidInput, parseInput } from '@/utils/jsonToDotNotation';
 import { FileJson, RefreshCw } from 'lucide-react';
+import React, { useState } from 'react';
 
 interface ConversionFormProps {
   onConvert: (json: Record<string, any>) => void;
@@ -19,17 +18,17 @@ const ConversionForm: React.FC<ConversionFormProps> = ({ onConvert }) => {
   };
 
   const handleExampleClick = () => {
-    const exampleJson = {
-      "user": {
-        "name": "John",
-        "age": 30,
-        "address": {
-          "street": "123 Main St",
-          "city": "New York"
+    const exampleInput = `export default {
+      user: {
+        name: "John",
+        age: 30,
+        address: {
+          street: "123 Main St",
+          city: "New York"
         }
       }
-    };
-    setJsonInput(JSON.stringify(exampleJson, null, 2));
+    } as const`;
+    setJsonInput(exampleInput);
   };
 
   const handleClear = () => {
@@ -39,9 +38,9 @@ const ConversionForm: React.FC<ConversionFormProps> = ({ onConvert }) => {
   const handleConvert = () => {
     if (!jsonInput.trim()) {
       toast({
-        title: "Empty input",
-        description: "Please enter a JSON object to convert.",
-        variant: "destructive"
+        title: 'Empty input',
+        description: 'Please enter a JSON object or object literal to convert.',
+        variant: 'destructive',
       });
       return;
     }
@@ -49,78 +48,70 @@ const ConversionForm: React.FC<ConversionFormProps> = ({ onConvert }) => {
     try {
       setIsLoading(true);
       setTimeout(() => {
-        if (!isValidJson(jsonInput)) {
+        if (!isValidInput(jsonInput)) {
           toast({
-            title: "Invalid JSON",
-            description: "Please enter valid JSON syntax.",
-            variant: "destructive"
+            title: 'Invalid input',
+            description: 'Please enter valid JSON or object literal syntax.',
+            variant: 'destructive',
           });
           setIsLoading(false);
           return;
         }
 
-        const parsedJson = JSON.parse(jsonInput);
-        onConvert(parsedJson);
+        const parsedInput = parseInput(jsonInput);
+        onConvert(parsedInput);
         toast({
-          title: "Success!",
-          description: "JSON converted to dot notation format.",
+          title: 'Success!',
+          description: 'Input converted to dot notation format.',
         });
         setIsLoading(false);
-      }, 500); // Small timeout to show loading state
+      }, 500);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "An unexpected error occurred.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'An unexpected error occurred.',
+        variant: 'destructive',
       });
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="w-full space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold">Input JSON</h2>
-        <div className="space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={handleExampleClick}
-          >
+    <div className='w-full space-y-4'>
+      <div className='flex justify-between items-center'>
+        <h2 className='text-lg font-semibold'>Input Object</h2>
+        <div className='space-x-2'>
+          <Button variant='outline' size='sm' onClick={handleExampleClick}>
             Load Example
           </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={handleClear}
-          >
+          <Button variant='outline' size='sm' onClick={handleClear}>
             Clear
           </Button>
         </div>
       </div>
-      <div className="relative">
-        <div className="absolute top-2 left-2">
-          <FileJson size={18} className="text-muted-foreground" />
+      <div className='relative'>
+        <div className='absolute top-2 left-2'>
+          <FileJson size={18} className='text-muted-foreground' />
         </div>
         <Textarea
-          className="min-h-[300px] pl-8 font-mono text-sm resize-y bg-white border-converter-blue/20"
-          placeholder="Paste your JSON object here..."
+          className='min-h-[300px] pl-8 font-mono text-sm resize-y bg-white border-converter-blue/20'
+          placeholder='Paste your JSON object or object literal here...'
           value={jsonInput}
           onChange={handleInputChange}
         />
       </div>
-      <Button 
-        className="w-full bg-converter-blue hover:bg-converter-blue-dark"
+      <Button
+        className='w-full bg-converter-blue hover:bg-converter-blue-dark'
         onClick={handleConvert}
         disabled={isLoading}
       >
         {isLoading ? (
           <>
-            <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+            <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
             Converting...
           </>
         ) : (
-          "Convert to Dot Notation"
+          'Convert to Dot Notation'
         )}
       </Button>
     </div>
