@@ -83,7 +83,7 @@ export function formatDotNotation(dotNotationObj: Record<string, any>): string {
       return `"${key}": ${JSON.stringify(value)}`;
     } else {
       // Use backticks for primitive values
-      return `"${key}": \`${String(value)}\``;
+      return `"${key}": "${String(value)}"`;
     }
   });
 

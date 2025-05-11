@@ -19,12 +19,23 @@ const ConversionForm: React.FC<ConversionFormProps> = ({ onConvert }) => {
 
   const handleExampleClick = () => {
     const exampleInput = `export default {
-      user: {
-        name: "John",
-        age: 30,
-        address: {
-          street: "123 Main St",
-          city: "New York"
+      common: {
+        welcome: "Welcome to our app",
+        loading: "Loading...",
+        error: "An error occurred"
+      },
+      auth: {
+        login: {
+          title: "Sign In",
+          email: "Email Address",
+          password: "Password",
+          submit: "Log In"
+        },
+        register: {
+          title: "Create Account",
+          email: "Email Address",
+          password: "Password",
+          submit: "Sign Up"
         }
       }
     } as const`;
@@ -95,7 +106,18 @@ const ConversionForm: React.FC<ConversionFormProps> = ({ onConvert }) => {
         </div>
         <Textarea
           className='min-h-[300px] pl-8 font-mono text-sm resize-y bg-white border-converter-blue/20'
-          placeholder='Paste your JSON object or object literal here...'
+          placeholder={`export default {
+  common: {
+    welcome: "Welcome to our app",
+    loading: "Loading..."
+  },
+  auth: {
+    login: {
+      title: "Sign In",
+      email: "Email Address"
+    }
+  }
+} as const`}
           value={jsonInput}
           onChange={handleInputChange}
         />
