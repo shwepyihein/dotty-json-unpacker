@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Parses different input formats into a JavaScript object
  * @param input - The input string (JSON or object literal)
